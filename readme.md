@@ -121,3 +121,36 @@ After completing the above steps, your Kivy application will be able to:
 - Receive Firebase Cloud Messaging (FCM) notifications.
 - Access notification payload data from Python.
 - Handle both cold-start and warm-start notification launches consistently.
+
+## DEEP LINKING
+
+- Register in PythonActivity onCreate
+
+```java
+if (uri != null) {
+    Log.d("DeepLink", "URL: " + uri.toString());
+    String screen = uri.getQueryParameter("screen");
+    String id = uri.getQueryParameter("id");
+    Log.d("DeepLink", "screen = " + screen);
+    Log.d("DeepLink", "id = " + id);
+}
+```
+- Add this to the supported Deeplink Activity
+```xml
+<!-- Deep Link -->
+<intent-filter>
+    <action android:name="android.intent.action.VIEW"/>
+    <category android:name="android.intent.category.DEFAULT"/>
+    <category android:name="android.intent.category.BROWSABLE"/>
+
+    <!-- https://myapp.com/... -->
+    <data
+        android:scheme="kvc"
+        android:host="myapp.com"/>
+
+    <!-- http://myapp.com/... -->
+    <data
+        android:scheme="kvc"
+        android:host="myapp.com"/>
+</intent-filter>
+```

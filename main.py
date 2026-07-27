@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
 from kivy.properties import DictProperty
 from kivy.clock import Clock
+from utils import NotificationListener
 
 from jnius import autoclass
 from permissions import handle_android_permissions
@@ -47,8 +48,15 @@ class NotificationApp(App):
                 self.notification_data[key] = bundle.get(key)
         else:
             print("onResume: bundle is None")
+    
+    def callback(self, json):
+        self.notification_data = json
 
     def build(self):
+        NotificationBridge = autoclass("org.kivy.NotificationBridge")
+        listener = NotificationListener(self.callback)
+        NotificationBridge.setListener(listener)
+
         Clock.schedule_once(lambda dt: handle_android_permissions(), 7)
         return Builder.load_string(KV)
 
