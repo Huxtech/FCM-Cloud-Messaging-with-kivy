@@ -39,6 +39,7 @@ class NotificationApp(App):
                 self.notification_data[key] = bundle.get(key)
         else:
             print("onStart: bundle is None")
+        self.dispatch("on_resume")
 
     def on_resume(self, **kwargs):
         PythonActivity = autoclass('org.kivy.android.PythonActivity')
@@ -48,6 +49,9 @@ class NotificationApp(App):
                 self.notification_data[key] = bundle.get(key)
         else:
             print("onResume: bundle is None")
+        activity = PythonActivity.mActivity
+        Clock.schedule_once(lambda _: activity.setAppIsReady(True))
+    
     
     def callback(self, json):
         self.notification_data = json
