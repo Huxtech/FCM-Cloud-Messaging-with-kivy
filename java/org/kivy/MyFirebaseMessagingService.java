@@ -33,9 +33,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onNewToken(token);
 
         String accessToken = "my_access_token"; // Replace with your actual access token retrieval logic
+        String api = "https://your-domain.com/api/fcm-token/";
         if (accessToken != null) {
             TokenSyncHelper.sendToken(
-                    "https://your-domain.com/api/fcm-token/",
+                    api,
                     accessToken,
                     token,
                     new TokenSyncHelper.Callback() {
