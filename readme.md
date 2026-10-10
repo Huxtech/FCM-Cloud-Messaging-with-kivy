@@ -71,9 +71,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
     ...
 
-    if (getIntent() != null
-            && getIntent().getExtras() != null
-            && getIntent().getExtras().size() > 0) {
+    if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().size() > 0) {
         mIntentBundle = getIntent().getExtras();
     }
 
@@ -87,9 +85,8 @@ protected void onCreate(Bundle savedInstanceState) {
 @Override
 protected void onNewIntent(Intent intent) {
 
-    if (intent != null
-            && intent.getExtras() != null
-            && intent.getExtras().size() > 0) {
+    
+    if (intent != null && intent.getExtras() != null && intent.getExtras().size() > 0) {
         mIntentBundle = intent.getExtras();
     }
 

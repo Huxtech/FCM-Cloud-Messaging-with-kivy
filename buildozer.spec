@@ -198,7 +198,7 @@ android.add_src = java
 # 3) A directory, here 'legal_resources' must contain one or more directories, 
 # each of a resource kind:  drawable, xml, etc...
 # android.add_resources = legal_resources
-#android.add_resources =
+android.add_resources = ./res
 
 # (list) Gradle dependencies to add
 android.gradle_dependencies = androidx.core:core-splashscreen:1.0.1
@@ -242,7 +242,8 @@ android.enable_androidx = True
 #android.res_xml = PATH_TO_FILE,
 
 # (str) launchMode to set for the main activity
-#android.manifest.launch_mode = standard
+# android.manifest.launch_mode = standard
+android.manifest.launch_mode = singleTop
 
 # (str) screenOrientation to set for the main activity.
 # Valid values can be found at https://developer.android.com/guide/topics/manifest/activity-element

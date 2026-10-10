@@ -3,6 +3,7 @@ package org.kivy;
 import java.util.LinkedList;
 import java.util.Queue;
 import org.json.JSONObject;
+import android.os.Bundle;
 
 public class NotificationBridge {
 
@@ -10,10 +11,19 @@ public class NotificationBridge {
         void onMessage(JSONObject json);
     }
 
+    public interface IntentMessageListener {
+        void onIntentMessage(Bundle mIntentBundle);
+    }
+
     private static volatile MessageListener listener;
+    private static volatile IntentMessageListener intentListener;
     private static final Queue<JSONObject> pendingMessages = new LinkedList<>();
     
     // Register Python listener.
+    public static synchronized void setIntentMessageListener(IntentMessageListener eventListener) {
+        intentListener = eventListener;
+    }
+
     public static synchronized void setListener(MessageListener eventListener) {
         listener = eventListener;
         // Deliver queued messages
@@ -35,6 +45,12 @@ public class NotificationBridge {
             listener.onMessage(json);
         } else {
             pendingMessages.add(json);
+        }
+    }
+
+    public static synchronized void sendItentMessage(Bundle mIntentBundle) {
+        if (intentListener != null) {
+            intentListener.onIntentMessage(mIntentBundle);
         }
     }
 }
